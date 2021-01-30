@@ -1,13 +1,9 @@
 #include <stdio.h>
-#include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/shm.h>
-#include <sys/stat.h>
 #include <sys/mman.h>
-#include <ctype.h>
-#include <string.h>
 
 
 int collatz_step(int val) {
