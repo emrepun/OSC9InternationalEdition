@@ -64,6 +64,11 @@ int main(int argc, char *argv[]) {
     printf("PARENT\n");
 
     printf("%s", ptr);
+
+    if (shm_unlink(name) == -1) {
+      printf("Error removing %s\n",name);
+      exit(-1);
+	  }
   }
 
 }
