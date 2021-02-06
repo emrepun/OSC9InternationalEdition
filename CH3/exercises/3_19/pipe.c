@@ -3,10 +3,24 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <ctype.h>
 
 #define BUFFER_SIZE 4096
 #define READ_END	0
 #define WRITE_END	1
+
+void reverseCase(char *char_array_pointer) {
+  int count = 0;
+
+  while(char_array_pointer[count] != '\0') {
+    if (isupper(char_array_pointer[count])) {
+      char_array_pointer[count] = tolower(char_array_pointer[count]);
+    } else {
+      char_array_pointer[count] = toupper(char_array_pointer[count]);
+    }
+    count++;
+  }
+}
 
 int main(int argc, char const *argv[]) {
   char write_msg_parent[BUFFER_SIZE] = "Hi There";
