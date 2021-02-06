@@ -57,7 +57,7 @@ int main(int argc, char const *argv[]) {
     close(parent_fd[READ_END]);
 
     strcpy(write_msg_child, read_msg_parent);
-    strcat(write_msg_child, " coming from child");
+    reverseCase(write_msg_child);
 
     write(child_fd[WRITE_END], write_msg_child, strlen(write_msg_child));
     close(child_fd[WRITE_END]);
