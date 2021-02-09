@@ -10,6 +10,10 @@ int size = 0;
 void *average_of_array(void *arg) {
   int *numbers = (int *) arg;
   int sum;
+  if (size < 1) {
+    average = 0;
+    pthread_exit(0);
+  }
   for (int i = 0; i < size; i++) {
     printf("Numb is: %i\n", numbers[i]);
     sum += numbers[i];
