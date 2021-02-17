@@ -12,7 +12,7 @@ void *calculate_in_circle_random_count() {
     float x = (float)rand()/(float)(RAND_MAX);
     float y = (float)rand()/(float)(RAND_MAX);
 
-    float val = sqrt((x * x) + (y * y));
+    float val = (x * x) + (y * y);
 
     if (val < 1.0) {
       in_circle++;
