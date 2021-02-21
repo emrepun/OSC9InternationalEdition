@@ -1,42 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <math.h>
-#include <omp.h>
 
-int in_circle = 0;
-int total = 10000;
-int thread_numb = 4;
+double calculate_in_circle_random_count(void)
+{
+    static const unsigned total = 100000;
+    unsigned in_circle = 0;
 
-void calculate_in_circle_random_count() {
-  srand((unsigned int)time(NULL));
-  for (int i = 0; i < total / thread_numb; i++) {
-    float x = (float)rand()/(float)(RAND_MAX);
-    float y = (float)rand()/(float)(RAND_MAX);
+    #pragma omp parallel for reduction(+:in_circle)
+    {
+      for (unsigned i = 0;  i < total;  ++i) {
+          double x = (double)rand() / RAND_MAX;
+          double y = (double)rand() / RAND_MAX;
 
-    float val = (x * x) + (y * y);
-
-    if (val < 1.0) {
-      #pragma omp critical
-      {
-        in_circle++;
+          double val = x * x + y * y;
+          in_circle +=  val < 1.0;
       }
     }
-  }
+    return 4.0 * in_circle / total;
 }
 
-int main(int argc, char const *argv[]) {
-  #pragma omp parallel num_threads(thread_numb)
-  {
-    printf("Hello from process: %d\n", omp_get_thread_num());
-    calculate_in_circle_random_count();
-  }
+int main(void)
+{
+    const double pi_approx = calculate_in_circle_random_count();
+    printf("Pi approximation: %.6f\n", pi_approx);
 
-  float pi_approx = 4 * (float)in_circle / (float)total;
-
-  printf("In circle: %d\n", in_circle);
-  printf("Total: %d\n", total);
-  printf("Pi approximation: %.6f\n", pi_approx);
-
-  return 0;
 }
